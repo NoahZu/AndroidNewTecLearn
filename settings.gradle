@@ -1,3 +1,4 @@
-include ':anni'
+include ':annotation-processor'
+include ':annotation'
 include ':app'
 rootProject.name = "AndroidNewTecLearn"

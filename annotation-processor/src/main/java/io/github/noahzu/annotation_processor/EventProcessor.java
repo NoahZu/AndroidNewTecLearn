@@ -1,15 +1,15 @@
-package io.github.noahzu.anni;
+package io.github.noahzu.annotation_processor;
 
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -17,37 +17,16 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
+
+import io.github.noahzu.annotation.EventReceive;
 
 @AutoService(Processor.class)
 public class EventProcessor extends AbstractProcessor {
-    /**
-     * 用来处理TypeMirror的工具类
-     */
-    private Types mTypeUtils;
-    /**
-     * 用于创建文件
-     */
-    private Filer mFiler;
-    /**
-     * 用于打印信息
-     */
-    private Messager mMessager;
-    /**
-     * 用来处理Element的工具类
-     */
     private Elements mElementUtils;
-
-    private List<EventAnnotatedClass> eventAnnotatedMethodList = new ArrayList<>();
-
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnvironment) {
-        super.init(processingEnvironment);
-
-    }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -61,7 +40,17 @@ public class EventProcessor extends AbstractProcessor {
      */
     @Override
     public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
+        return SourceVersion.RELEASE_8;
+    }
+
+    @Override
+    public synchronized void init(ProcessingEnvironment processingEnv) {
+        super.init(processingEnv);
+        mElementUtils = processingEnv.getElementUtils();
+    }
+
+    private String getPackageName(TypeElement type) {
+        return mElementUtils.getPackageOf(type).getQualifiedName().toString();
     }
 
     @Override
@@ -81,21 +70,28 @@ public class EventProcessor extends AbstractProcessor {
             String packageName = packageElement.getQualifiedName().toString();
             String methodName = methodElement.getSimpleName().toString();
             int eventId = methodElement.getAnnotation(EventReceive.class).eventId();
-            System.out.println("#EventProcessor:fullClassName="+fullClassName+",className="+className+",packageName="+packageName+",methodName="+methodName+",eventId="+eventId);
         }
-        writeCode();
+
+        MethodSpec main = MethodSpec.methodBuilder("main")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(void.class)
+                .addParameter(String[].class, "args")
+                .addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
+                .build();
+
+        TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addMethod(main)
+                .build();
+
+        JavaFile javaFile = JavaFile.builder("io.github.noahzu.androidnewteclearn", helloWorld)
+                .build();
+
+        try {
+            javaFile.writeTo(processingEnv.getFiler());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
-
-    private boolean isValidClass(EventAnnotatedClass annotatedClass) {
-
-        return true;
-    }
-
-
-    private void writeCode() {
-
-    }
-
-
 }
