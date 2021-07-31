@@ -5,15 +5,25 @@ import io.github.noahzu.annotation.EventReceiveAnnotation;
 
 @EventDispatchAnnotation
 public class EventDispatcher {
-
     @EventReceiveAnnotation(eventId = 1)
     protected void onReceiveMessage1(MessagePacket packet) {
         System.out.println("onReceiveMessage 1");
         System.out.println(packet.getEventId());
     }
 
+    @EventReceiveAnnotation(eventId = 1)
+    protected void onReceiveMessage11(MessagePacket packet) {
+        System.out.println("onReceiveMessage 11");
+        System.out.println(packet.getEventId());
+    }
+
     @EventReceiveAnnotation(eventId = 2)
     protected void onReceiveMessage2(MessagePacket packet) {
+        System.out.println("onReceiveMessage 2");
+        System.out.println(packet.getEventId());
+    }
+    @EventReceiveAnnotation(eventId = 2)
+    protected void onReceiveMessage22(MessagePacket packet) {
         System.out.println("onReceiveMessage 2");
         System.out.println(packet.getEventId());
     }
@@ -36,6 +46,12 @@ public class EventDispatcher {
         System.out.println(packet.getEventId());
     }
 
+    @EventReceiveAnnotation(eventId = 5)
+    protected void onReceiveMessage55(MessagePacket packet) {
+        System.out.println("onReceiveMessage 5");
+        System.out.println(packet.getEventId());
+    }
+
     @EventReceiveAnnotation(eventId = 6)
     protected void onReceiveMessage6(MessagePacket packet) {
         System.out.println("onReceiveMessage 6");
@@ -44,6 +60,10 @@ public class EventDispatcher {
 
     @EventReceiveAnnotation(eventId = -1)
     protected void onProcessDefaultMessage(MessagePacket packet) {
+        System.out.println("消息号是"+packet.getEventId()+"没有添加处理方法，走默认");
+    }
+    @EventReceiveAnnotation(eventId = -1)
+    protected void onProcessDefault2Message(MessagePacket packet) {
         System.out.println("消息号是"+packet.getEventId()+"没有添加处理方法，走默认");
     }
 }

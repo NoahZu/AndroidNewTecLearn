@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.jakewharton.butterknife'
 }
+apply from: "$rootDir/dependencies.gradle"
 
 android {
     compileSdkVersion 30
@@ -45,4 +47,9 @@ dependencies {
 
     implementation project(':annotation')
     kapt project(':annotation-processor')
+
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofitVersion"
 }

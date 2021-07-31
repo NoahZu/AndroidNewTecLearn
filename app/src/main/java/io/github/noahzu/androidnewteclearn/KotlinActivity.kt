@@ -2,11 +2,15 @@ package io.github.noahzu.androidnewteclearn
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import butterknife.ButterKnife
 
 class KotlinActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin)
+        ButterKnife.bind(this);
 
         MessageAutoSender().start()
     }
@@ -26,4 +30,5 @@ class KotlinActivity : AppCompatActivity() {
             }
         }
     }
+
 }

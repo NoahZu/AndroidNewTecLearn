@@ -3,17 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".KotlinActivity">
+    android:layout_height="68dp"
+    android:background="@color/qmui_config_color_gray_1">
 
+    <ImageView
+        android:id="@+id/point_1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="18dp"
+        android:src="#FF0000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintEnd_toStartOf="@id/point_2"
+        android:layout_marginStart="20dp" />
 
     <TextView
+        android:text="point1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/point_1"
+        app:layout_constraintEnd_toEndOf="@id/point_1"
+        app:layout_constraintTop_toBottomOf="@id/point_1"/>
+
+    <ImageView
+        android:id="@+id/point_2"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="18dp"
+        android:src="#00Ff00"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Kotlin Activity"/>
+        app:layout_constraintEnd_toStartOf="@id/point_3"
+        app:layout_constraintStart_toEndOf="@id/point_1"/>
+
+    <ImageView
+        android:id="@+id/point_3"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="18dp"
+        android:src="#00FFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/point_4"
+        app:layout_constraintStart_toEndOf="@id/point_2"/>
+
+    <ImageView
+        android:id="@+id/point_4"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="18dp"
+        android:src="#0000FF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/point_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

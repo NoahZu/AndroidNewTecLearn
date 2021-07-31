@@ -1,0 +1,5 @@
+
+ext.versions = [
+        // network
+        retrofitVersion      : '2.9.0'
+]
